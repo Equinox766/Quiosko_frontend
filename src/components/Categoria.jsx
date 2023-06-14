@@ -14,7 +14,9 @@ export default function Categoria({categoria}) {
             />
             <button 
                 type='button'
-                onClick={() => handleClickCategoria(id)}
+                onClick={() => {
+                    handleClickCategoria(id);
+                }}
                 className="text-lg font-bold cursor-pointer truncate"
             >
                 {nombre}
