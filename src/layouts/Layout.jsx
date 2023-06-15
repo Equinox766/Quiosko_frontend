@@ -1,6 +1,9 @@
 import { Outlet } from 'react-router-dom'
 import Resumen from '../components/Resumen'
 import Sidebar from '../components/Sidebar'
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
+
 import useQuiosco from '../hooks/useQuiosco'
 import ModalProducto from '../components/ModalProducto'
 
@@ -18,6 +21,7 @@ export default function layout() {
         <Resumen />
       </div>
       {modal ? <ModalProducto /> : null}
+      <ToastContainer />
     </>
   )
 }
