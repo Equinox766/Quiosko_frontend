@@ -3,8 +3,12 @@ import ResumenProducto from './ResumenProducto'
 import { formatearDinero } from '../helpers';
 
 export default function Resumen() {
-  const { pedido, total } = useQuiosco();
+  const { pedido, total, handleSubmitNuevaOrden } = useQuiosco();
   const comprobarPedido = () => pedido.length === 0;
+  const handleSubmit = e => {
+    e.preventDefault()
+    handleSubmitNuevaOrden()
+  }
   return (
     <aside className="md:w-72 h-screen overflow-x-scroll p-5">
       <h1 className="text-4xl font-black">
@@ -31,7 +35,10 @@ export default function Resumen() {
         Total: {''}
         {formatearDinero(total)}
       </p>
-      <form className='w-full'>
+      <form 
+        className='w-full'
+        onSubmit={handleSubmit}
+      >
         <div className='mt-5'>
           <input 
             type="submit" 
