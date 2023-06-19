@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import useSWR from "swr"
 import clienteAxios from "../config/axios"
+import { useNavigate } from "react-router-dom";
 
 
 export const useAuth = ({middleware, url}) => {
 
     const token = localStorage.getItem('AUTH_TOKEN');
+    const navigate = useNavigate()
 
     const {data: user, error, mutate} = useSWR('/api/user', () => 
         clienteAxios('/api/user', {
@@ -35,9 +38,16 @@ export const useAuth = ({middleware, url}) => {
     const logout = () => {
 
     }
-
-    console.log(user);
-    console.log(error);
+    
+    useEffect(() => {
+        if(middleware === 'guest' && url && user){
+            navigate(url)
+        }
+        if(middleware === 'auth' && error){
+            navigate('/auth/login')
+        }
+    }, [user, error])
+    
 
     return {
         login,
@@ -45,3 +55,5 @@ export const useAuth = ({middleware, url}) => {
         logout
     }
 }
+
+export default useAuth
