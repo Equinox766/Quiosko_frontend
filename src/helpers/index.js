@@ -4,3 +4,5 @@ export const formatearDinero = cantidad => {
         currency: 'PYG'
     })
 }
+
+export default formatearDinero

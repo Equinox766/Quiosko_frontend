@@ -4,11 +4,11 @@ import Sidebar from '../components/Sidebar'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
 import useQuiosco from '../hooks/useQuiosco'
-import useAuth from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuth'
 import ModalProducto from '../components/ModalProducto'
 
 export default function layout() {
-  const { user, error } = useAuth({middleware: 'auth'})
+  useAuth({middleware: 'auth'})
   const { modal } = useQuiosco();
   return (
     <>
