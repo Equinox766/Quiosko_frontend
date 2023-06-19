@@ -1,12 +1,39 @@
+import { createRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import clienteAxios from '../config/axios'
+import Alerta from '../components/Alerta'
 
 export default function login() {
-  return (
+    const emailRef = createRef();
+    const passwordRef = createRef();
+    
+    const [errores, setErrores ] = useState([]);
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const datos = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        }
+        try {
+            const {data} = await clienteAxios.post('/api/login', datos)
+            localStorage.setItem('AUTH_TOKEN', data.token)
+            setErrores([])
+        } catch (error) {
+            setErrores(Object.values(error.response.data.errors));
+        }
+    }
+
+    return (
     <>    
     <h1 className='text-4xl font-black'>Iniciar Sesión</h1>
     <p>Para crear un pedido debes iniciar sesión</p>
     <div className="bg-white shadow-md rounded-md mt-10 px-5 py-10">
-        <form action="">
+        <form 
+            noValidate
+            onSubmit={handleSubmit}
+        >
+            {errores ? errores.map((error, i) => <Alerta key={i}>{error}</Alerta>) : null}
             <div className="mb-4">
                 <label
                     className="text-slate-800"
@@ -19,6 +46,7 @@ export default function login() {
                     id="email"
                     className="mt-2 w-full block p-3 bg-gray-50 "
                     name="email"
+                    ref={emailRef}
                     placeholder="Tu email"
                 />
             </div>
@@ -34,6 +62,7 @@ export default function login() {
                     id="password"
                     className="mt-2 w-full block p-3 bg-gray-50 "
                     name="password"
+                    ref={passwordRef}
                     placeholder="Tu contraseña"
                 />
             </div>
@@ -41,10 +70,10 @@ export default function login() {
         </form>
     </div>
     <nav className="mt-5">
-      <Link to="/auth/registro">
+        <Link to="/auth/registro">
         ¿No tienes cuenta? Crea una
-      </Link>
+        </Link>
     </nav>
-</>
-  )
+    </>
+    )
 }
