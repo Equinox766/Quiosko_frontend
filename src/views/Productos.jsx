@@ -10,7 +10,6 @@ export default function Productos() {
   }).then(data => data.data)
 
   const {data, error, isLoading} = useSWR('/api/productos', fetcher, {refreshInterval: 10000})
-  console.log(data?.data);
   if(isLoading) return 'Cargando...';
   return (
     <div>

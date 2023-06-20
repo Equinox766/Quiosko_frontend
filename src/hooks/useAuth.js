@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import useSWR from "swr"
 import clienteAxios from "../config/axios"
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 
 export const useAuth = ({middleware, url}) => {
@@ -25,6 +27,7 @@ export const useAuth = ({middleware, url}) => {
     const login = async (datos, setErrores) => {
         try {
             const {data} = await clienteAxios.post('/api/login', datos)
+            toast.success('Datos Validados, aguarde un momento')
             localStorage.setItem('AUTH_TOKEN', data.token)
             setErrores([])
             await mutate()
@@ -35,6 +38,7 @@ export const useAuth = ({middleware, url}) => {
     const registro = async (datos, setErrores) => {
         try {
             const {data} = await clienteAxios.post('/api/registro', datos)
+            toast.success('Su cuenta ha sido creada, aguarde un momento')
             localStorage.setItem('AUTH_TOKEN', data.token)
             setErrores([])
             await mutate()
