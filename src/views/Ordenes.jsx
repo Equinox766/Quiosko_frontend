@@ -24,7 +24,7 @@ export default function Ordenes() {
         Administra las ordenes desde aqui.
       </p>
       <div className="grid grid-cols-2 gap-3">
-        {data.data.data.map(pedido => (
+        {data && data.data.data.map(pedido => (
           <div className="p-5 bg-white shadow space-y-2 border-b" key={pedido.id}>
             <p className="text-xl font-bold text-slate-600 ">
               Contenido del pedido: 
