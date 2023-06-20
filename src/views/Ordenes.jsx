@@ -1,4 +1,5 @@
 import useSWR from "swr"
+import useQuiosco from '../hooks/useQuiosco'
 import clienteAxios from "../config/axios"
 import formatearDinero from '../helpers'
 
@@ -10,8 +11,9 @@ export default function Ordenes() {
     }
   })
 
-  const {data, error, isLoading} = useSWR('/api/pedidos', fetcher)
+  const {data, error, isLoading} = useSWR('/api/pedidos', fetcher, {refreshInterval: 10000})
 
+  const { handleClickCompletarPedido } = useQuiosco()
 
   if(isLoading) return 'Cargando...';
 
@@ -49,6 +51,7 @@ export default function Ordenes() {
             type="button" 
             className="bg-indigo-600 hover:bg-indigo-800 px-5 py-2 rounded uppercase font-bold text-white text-center w-full cursor-pointer" 
             value="Confirmar pedido"
+            onClick={() => handleClickCompletarPedido(pedido.id)}
           >Completar</button>
           </div>
 
